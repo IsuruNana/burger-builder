@@ -12,7 +12,7 @@ const layout = (props) => (
         </div>
         <main className={layoutClasses.Content}>
             {props.children}
-            {console.log(layoutClasses)}
+            {/*console.log(layoutClasses)*/}
         </main> 
     </Auxilary>
 );
