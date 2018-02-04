@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Auxilary from '../../hoc/Auxilary';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -19,7 +21,21 @@ class BurgerBuilder extends Component {
             bacon: 0,
             meat: 0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        purchasable: false
+    }
+
+    updatePurchaseState(ingredients) {
+        const sum = Object.keys(ingredients)
+            .map(key => {
+                return ingredients[key];
+            })
+            .reduce((sum, el) => {
+                return sum + el;
+            }, 0);
+        this.setState({
+            purchasable: sum > 0
+        })
     }
 
     addIngredientHandler = (type) => {
@@ -36,11 +52,12 @@ class BurgerBuilder extends Component {
             totalPrice: newPrice,
             ingredients: updatedIngredients
         });
+        this.updatePurchaseState(updatedIngredients);
     }
 
     removeIngredientHandler = (type) => {
         let updatedCount = 0;
-        let newPrice = 4;
+        let newPrice = this.state.totalPrice;
 
         if(this.state.ingredients[type] > 0){
             updatedCount = this.state.ingredients[type] - 1;
@@ -56,16 +73,24 @@ class BurgerBuilder extends Component {
             totalPrice: newPrice,
             ingredients: updatedIngredients
         });
+
+        this.updatePurchaseState(updatedIngredients);
     }
 
     render() {
         return(
             <Auxilary>
+                <Modal>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
+                    purchasable = {this.state.purchasable}
+                    price={this.state.totalPrice}
                 />
+
             </Auxilary>
         );
     }
