@@ -1,12 +1,13 @@
 import React from 'react';
 import Auxilary from '../../hoc/Auxilary';
+import Toolbar from '../Navigation/Toolbar/Toolbar';
 
 import layoutClasses from './Layout.module.css';
 
 const layout = (props) => (
     <Auxilary>
         <div> 
-            Toolbar, 
+            <Toolbar /> 
             SideDrawer,
             Backdrop
         </div>
