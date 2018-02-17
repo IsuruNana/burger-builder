@@ -3,13 +3,13 @@ import Auxilary from '../../hoc/Auxilary';
 import Toolbar from '../Navigation/Toolbar/Toolbar';
 
 import layoutClasses from './Layout.module.css';
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
 const layout = (props) => (
     <Auxilary>
         <div> 
             <Toolbar /> 
-            SideDrawer,
-            Backdrop
+            <SideDrawer />
         </div>
         <main className={layoutClasses.Content}>
             {props.children}
