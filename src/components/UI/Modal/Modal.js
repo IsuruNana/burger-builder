@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './Modal.module.css';
-import Auxilary from '../../../hoc/Auxilary';
+import Auxilary from '../../../hoc/Auxilary/Auxilary';
 import Backdrop from '../Backdrop/Backdrop';
 
 
