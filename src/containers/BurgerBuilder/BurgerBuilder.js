@@ -44,60 +44,19 @@ class BurgerBuilder extends Component {
         return sum > 0;
     }
 
-    /*addIngredientHandler = (type) => {
-        const updatedCount = this.state.ingredients[type] + 1;
-        const updatedIngredients = {
-            ...this.state.ingredients
-        };
-        updatedIngredients[type] = updatedCount;
-
-        const priceAddition = INGREDIENT_PRICES[type];
-        const newPrice = this.state.totalPrice + priceAddition;
-
-        this.setState({
-            totalPrice: newPrice,
-            ingredients: updatedIngredients
-        });
-        this.updatePurchaseState(updatedIngredients);
-    }
-
-    removeIngredientHandler = (type) => {
-        let updatedCount = 0;
-        let newPrice = this.state.totalPrice;
-
-        if(this.state.ingredients[type] > 0){
-            updatedCount = this.state.ingredients[type] - 1;
-            const priceAddition = INGREDIENT_PRICES[type];
-            newPrice = this.state.totalPrice - priceAddition;
-        }
-        const updatedIngredients = {
-            ...this.state.ingredients
-        };
-        updatedIngredients[type] = updatedCount;
-
-        this.setState({
-            totalPrice: newPrice,
-            ingredients: updatedIngredients
-        });
-
-        this.updatePurchaseState(updatedIngredients);
-    }*/
-
     purchaseHandler = () => {
         this.setState({
             purchasing: true
-        })
+        });
     }
 
     purchaseCancelledHandler = () => {
         this.setState({
             purchasing: false
-        })
+        });
     }
 
     purchaseContinueHandler = () => {
-        //alert('You Continued!');
-
         const queryParams = [];
 
         for(let i in this.state.ingredients) {
@@ -111,10 +70,8 @@ class BurgerBuilder extends Component {
             pathname: './checkout',
             search: queryString
         });
-
     }
     
-
     render() {
         let orderSummary = null;
         let burger = this.state.error ? <p> Ingredients Cant be loaded</p> : <Spinner />
