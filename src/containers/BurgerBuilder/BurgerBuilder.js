@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions';
+import * as actions from '../../store/actions/index';
 
 import Auxilary from '../../hoc/Auxilary/Auxilary';
 import Burger from '../../components/Burger/Burger';
@@ -8,7 +8,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
-import axios from '../../axios-orders';
+
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
@@ -18,18 +18,9 @@ class BurgerBuilder extends Component {
 
     state = {
         purchasing: false,
-        loading: false,
-        error: false
     }
 
     componentDidMount() {
-        /*axios.get('/ingredients.json')
-            .then(res => {
-                this.setState({ingredients: res.data});
-            })
-            .catch(err => {
-                this.setState({error: true})
-            })*/
     }
 
     updatePurchaseState(ingredients) {
@@ -87,10 +78,6 @@ class BurgerBuilder extends Component {
                         purchaseContinue={this.purchaseContinueHandler}/>
             );
         }
-        if(this.state.loading) {
-            orderSummary = <Spinner />
-        }
-
         return(
             <Auxilary>
                 <Modal 
@@ -115,15 +102,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         //Add an ingredient
-        onIngredientAdded: (ingName) => dispatch({
-            type: actionTypes.ADD_INGREDIENT,
-            ingredientName: ingName
-        }),
+        onIngredientAdded: (ingName) => dispatch(
+            actions.addIngredient(ingName)
+        ),
         //Remove an ingredient
-        onIngredientRemoved: (ingName) => dispatch({
-            type: actionTypes.REMOVE_INGREDIENT,
-            ingredientName: ingName
-        }),
+        onIngredientRemoved: (ingName) => dispatch(
+            actions.removeIngredient(ingName)
+        ),
     }
 }
 
