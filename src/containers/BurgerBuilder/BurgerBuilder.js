@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import axios from '../../axios-orders';
 
 import Auxilary from '../../hoc/Auxilary/Auxilary';
 import Burger from '../../components/Burger/Burger';
@@ -21,6 +22,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
+        this.props.onInitIngredients();
     }
 
     updatePurchaseState(ingredients) {
@@ -53,7 +55,7 @@ class BurgerBuilder extends Component {
     
     render() {
         let orderSummary = null;
-        let burger = this.state.error ? <p> Ingredients Cant be loaded</p> : <Spinner />
+        let burger = this.props.error ? <p> Ingredients Cant be loaded</p> : <Spinner />
 
         if(this.props.ings) {
             burger = 
@@ -95,7 +97,8 @@ const mapStateToProps = state => {
     //console.log(state.ingredients);
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: props.error
     }
 }
 
@@ -109,6 +112,9 @@ const mapDispatchToProps = dispatch => {
         onIngredientRemoved: (ingName) => dispatch(
             actions.removeIngredient(ingName)
         ),
+        onInitIngredients: () => dispatch(
+            actions.initIngredient()
+        )
     }
 }
 

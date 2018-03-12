@@ -15,6 +15,8 @@ export const removeIngredient = (ingName) => {
     }
 }
 
+//----------Helper methods for initIngredient() async call-----//
+
 const setIngredients = (ingredients) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
@@ -28,6 +30,8 @@ const fetchIngredientsFailed = () => {
     }
 }
 
+//----------End helper---------//
+
 export const initIngredient = () => {
     return dispatch => {
         axios.get('/ingredients.json')
@@ -36,6 +40,6 @@ export const initIngredient = () => {
             })
             .catch(err => {
                 dispatch(fetchIngredientsFailed());
-            })
+            });
     }
 }
