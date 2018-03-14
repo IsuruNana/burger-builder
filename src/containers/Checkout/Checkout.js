@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { Route, Redirect } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
-
+import * as actions from '../../store/actions/index'
 
 class Checkout extends Component {
+
     checkOutCancelledHandler = () => {
         this.props.history.goBack();
     }
@@ -19,6 +20,8 @@ class Checkout extends Component {
         let summary = <Redirect to="/" />
         
         if(this.props.ing) {
+            const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
+
             summary = 
             <div>
                 <CheckoutSummary 
@@ -43,7 +46,8 @@ class Checkout extends Component {
 const mapStateToProps = state => {
     console.log(state);
     return {
-        ings: state.burgerBuilder.ingredients
+        ings: state.burgerBuilder.ingredients,
+        purchased: state.order.purchased
     }
 }
  
