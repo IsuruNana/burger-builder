@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Auth from './containers/Auth/Auth';
 
 import indexCss from './index.css';
 
@@ -19,6 +20,7 @@ class App extends Component {
             <Route path="/" exact component={BurgerBuilder} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/orders" component={Orders} />
+            <Route path="/auth" component={Auth} />
           </Switch>
         </Layout>
       </div>
