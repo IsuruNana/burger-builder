@@ -14,7 +14,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 
-
 class BurgerBuilder extends Component {
 
     state = {
@@ -67,7 +66,7 @@ class BurgerBuilder extends Component {
                         ingredientAdded={this.props.onIngredientAdded}
                         ingredientRemoved={this.props.onIngredientRemoved}
                         purchasable = {this.updatePurchaseState(this.props.ings)}
-                        ordered={this.purchaseHandler}
+                        ordered={this.purchaseContinueHandler}
                         price={this.props.price}
                     />
                 </Auxilary>
@@ -99,7 +98,7 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        error: props.burgerBuilder.error
+        error: state.burgerBuilder.error
     }
 }
 

@@ -14,7 +14,6 @@ import axios from '../../../axios-orders';
 class ContactData extends Component {
     state = {
         orderForm : {
-            
             name: {
                 elementType: 'input',
                 elementConfig: {
@@ -117,11 +116,11 @@ class ContactData extends Component {
     checkValidity(value, rules) {
         let isValid = true;
 
-        if(rules.required) {
+        if(rules && rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
 
-        if(rules.minLength) {
+        if(rules && rules.minLength) {
             isValid = value.length >= rules.minLength && isValid;
         }
 
@@ -145,6 +144,7 @@ class ContactData extends Component {
             formIsValid = updatedOrderForm[id].valid && formIsValid;
 
         }
+        console.log(updatedOrderForm);
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
 
@@ -163,13 +163,13 @@ class ContactData extends Component {
                 {formElementsArray.map(formElement => (
                     <Input 
                         key = {formElement.id}
-                        elementType = {formElement.config.elementType} 
+                        inputtype = {formElement.config.elementType} 
                         elementConfig = {formElement.config.elementConfig}
                         value = {formElement.config.value}
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
                         touched={formElement.config.touched}
-                        changed={(event, identifier) => this.inputChangedHandler(event, identifier)}/>  
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}/>  
                 ))}
                 <Button btnType="Success" clicked={this.orderHandler} disabled={!this.state.formIsValid}> ORDER </Button>
             </form>
