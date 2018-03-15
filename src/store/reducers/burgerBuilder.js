@@ -4,7 +4,8 @@ import { updateObject } from '../utility';
 const initialState = {
     ingredients: null,
     totalPrice: 4,
-    error: false
+    error: false,
+    building: false
 }
 
 const INGREDIENT_PRICES = {
@@ -20,10 +21,37 @@ const addIngredient = (state, action) => {
     
     const updatedState = {
         ingredients: updatedIngredients,
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        building: true
     }
 
     return updateObject(state, updatedState);
+}
+
+const removeIngredient = (state, action) => {
+    if(state.ingredients[action.ingredientName] === 0) {
+        return state;
+    }
+
+    const updatedIngredient = {[action.ingredientName]: state.ingredients[action.ingredientName] - 1}
+    const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
+    
+    const updatedState = {
+        ingredients: updatedIngredients,
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        building: true
+    }
+
+    return updateObject(state, updatedState);
+}
+
+const setIngredients = (state, action) => {
+    return updateObject(state, {
+        ingredients: action.ingredients,
+        error: false,
+        totalPrice: 4.0,
+        building: false
+    });
 }
 
 const reducer = (state = initialState, action) => {
@@ -31,24 +59,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.ADD_INGREDIENT:
             return addIngredient(state, action);  
         case actionTypes.REMOVE_INGREDIENT:
-            if(state.ingredients[action.ingredientName] === 0) {
-                return state;
-            }
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-                },
-                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
-            } 
+            return removeIngredient(state, action);
         case actionTypes.SET_INGREDIENTS:
-            return {
-                ...state,
-                ingredients: action.ingredients,
-                error: false,
-                totalPrice: 4.0
-            } 
+            return setIngredients(state, action); 
         case actionTypes.SET_INGREDIENTS:
             return {
                 ...state,
